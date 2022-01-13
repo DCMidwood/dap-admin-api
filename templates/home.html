@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% set active_page = 'home' %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-lg-9">
+      <ul>
+        {% if workpacks %}
+        {% for workpack in workpacks %}
+        <li>
+          <a href="{{ url_for('workpack_view', index=workpack.id) }}">
+            {{ workpack.project }} - {{ workpack.workpack }}
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+        {% else %}
+        <h1 class="offset-lg-3">No items to show.</h1>
+        {% endif %}
+      <ul>
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% set active_page = 'new_item' %}
+{% block title %}Workpack  {{workpack.workpack}}{% endblock %}
+
+{% block content %}
+    <h1>Workpack Details </h1>
+    Id: {{index}}<br>
+    Name: {{workpack.workpack}}<br>
+    Project: {{workpack.project}}<br>
+
+
+
+<div class="users">
+    <h2>Users</h2><hr>
+      {% include 'static_table.html' %}
+</div>
+
+<div class="map_extent">
+    <h2>Workpack Extent</h2><hr>
+      {% include 'map.html' %}
+</div>
+
+{% endblock %}
