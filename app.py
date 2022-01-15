@@ -10,9 +10,9 @@ from wtforms.validators import (
 
 
 
-from model import (get_db, get_workpacks, get_specific_workpack,
+from model import (get_db, get_user_list, get_users, get_workpack_list, get_workpacks, get_specific_workpack,
                     get_specific_workpack_details, get_projects,
-                    get_project_list)
+                    get_project_list, get_workpack_details, get_role_list)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost/flasksql'
@@ -41,9 +41,9 @@ class NewUserForm(FlaskForm):
 
 
 class NewWorkpackUserForm(FlaskForm):
-    workpackid = StringField("Workpack")
-    userid = StringField("User")
-    roleid = StringField("Role")
+    workpackid = SelectField("Workpack", choices=[])
+    userid = SelectField("User", choices=[])
+    roleid = SelectField("Role", choices=[])
     submit = SubmitField("Submit")
 
 
@@ -92,6 +92,7 @@ def workpack_view(index):
         )
     except IndexError:
         abort(404)
+
 
 @app.route("/user/new", methods=["GET", "POST"])
 def new_user():
@@ -173,6 +174,16 @@ def new_workpack():
 @app.route("/workpack/new_user", methods=["GET", "POST"])
 def new_workpackuser():
     form = NewWorkpackUserForm()
+
+    workpack_list = get_workpack_list()
+    form.workpackid.choices = workpack_list
+
+    user_list = get_user_list()
+    form.userid.choices = user_list
+
+    role_list = get_role_list()
+    form.roleid.choices = role_list
+
     if request.method == "POST":
         conn = get_db()
         c = conn.cursor()
@@ -198,6 +209,20 @@ def map_func():
 	return render_template('map_drawextent.html')
 
 
+@app.route('/user/overview')
+def user_overview():
+    user_list = get_users()
+    user_headings = ("User Name", "User Email")
+    user_data = []
+    for row in user_list:
+        user_data.append((row.get('name'),
+                        row.get('email')
+                        ))
+    return render_template('user_overview.html',
+                            headings=user_headings,
+                            data=user_data,)
+
+
 @app.route('/user/<index>')
 def user(index):
     return render_template('user.html')
@@ -207,15 +232,18 @@ def user(index):
 def map_folium():
     return render_template("map_folium.html")
 
+
 @app.route('/map/esrimap')
 def map_esrimap():
     return render_template("esri_map.html")
+
 
 @app.teardown_appcontext
 def close_connection(exception):
     db = getattr(g, "_database", None)
     if db is not None:
         db.close()
+
 
 if __name__ == '__main__':
     app.run(debug=True)

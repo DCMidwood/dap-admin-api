@@ -41,15 +41,20 @@
           <li class="nav-item {{ 'active' if active_page == 'new_workpack' else ''}}">
             <a href="{{ url_for('new_workpack') }} " class="nav-link">Add New Workpack</a>
           </li>
+          <li class="nav-item {{ 'active' if active_page == 'user_overview' else ''}}">
+            <a href="{{ url_for('user_overview') }} " class="nav-link">User Overviews</a>
+          </li>
           <li class="nav-item {{ 'active' if active_page == 'new_user' else ''}}">
             <a href="{{ url_for('new_user') }} " class="nav-link">Add New User</a>
           </li>
           <li class="nav-item {{ 'active' if active_page == 'new_workpackuser' else ''}}">
             <a href="{{ url_for('new_workpackuser') }} " class="nav-link">Assign User to Workpack</a>
           </li>
+
           <li class="nav-item {{ 'active' if active_page == 'map_func' else ''}}">
             <a href="{{ url_for('map_func') }} " class="nav-link">Map</a>
           </li>
+          
         </ul>
       </div>
     </div>
@@ -71,11 +76,9 @@
   {% block content %}{% endblock %}
   </div>
 
-
 <!-- JavaScript Bundle with Popper -->
   <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
   <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script></body>
-
 </body>
 </html>

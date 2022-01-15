@@ -40,6 +40,16 @@ def get_project_list():
     return list
 
 
+def get_workpack_list():
+    workpacks=get_workpacks()
+    list=[]
+    for row in workpacks:
+        id=row['id']
+        name=row['workpack']
+        list.append((id, name))
+    return list
+
+
 def get_workpacks():
     conn = get_db()
     c = conn.cursor()
@@ -107,4 +117,61 @@ def get_specific_workpack_details(id):
     return workpacks
 
 
+def get_users():
+    conn = get_db()
+    c = conn.cursor()
+
+    users_from_db = c.execute("""SELECT uid, user_name, user_email
+                    FROM dap_user
+    """)
+
+    users = []
+    for row in users_from_db:
+        user = {
+            "id": row[0],
+            "name": row[1],
+            "email": row[2]
+        }
+        users.append(user)
+
+    return users
+
+
+def get_user_list():
+    users=get_users()
+    list=[]
+    for row in users:
+        id=row['id']
+        name=row['name']
+        list.append((id, name))
+    return list
+
+
+def get_roles():
+    conn = get_db()
+    c = conn.cursor()
+
+    roles_from_db = c.execute("""SELECT uid, role_name, role_level
+                    FROM dap_role
+    """)
+    roles = []
+    for row in roles_from_db:
+        role = {
+            "id": row[0],
+            "name": row[1],
+            "level": row[2]
+        }
+        roles.append(role)
+
+    return roles    
+
+
+def get_role_list():
+    roles=get_roles()
+    list=[]
+    for row in roles:
+        id=row['id']
+        name=row['name']
+        list.append((id, name))
+    return list    
 

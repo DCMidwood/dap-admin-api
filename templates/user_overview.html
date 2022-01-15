@@ -1,0 +1,9 @@
+{% extends 'base.html' %} {% set active_page = 'new_item' %} {% block title
+%}User Overview {% endblock %} {% block content %}
+<div class="Users">
+  <h2>Users</h2>
+  <hr />
+  {% include 'static_table.html' %}
+</div>
+
+{% endblock %}
