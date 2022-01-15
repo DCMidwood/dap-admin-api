@@ -30,7 +30,7 @@
 <br />
 <div align="center">
   <a href="https://github.com/DCMidwood/dap-admin-api">
-    <img src="static/images/dap_logo.png" alt="Logo" width="80" height="80">
+    <img src="static/images/dap_logo.jpg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">dap admin api</h3>
