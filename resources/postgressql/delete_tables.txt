@@ -1,0 +1,5 @@
+drop table "public.workpack_user_role" ;
+drop table "public.dap_workpack" ;
+drop table "public.dap_role" ;
+drop table "public.dap_user" ;
+drop table "public.dap_project" ;

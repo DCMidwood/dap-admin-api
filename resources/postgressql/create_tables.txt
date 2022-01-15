@@ -1,0 +1,70 @@
+CREATE TABLE "dap_project" (
+	"uid" serial NOT NULL,
+	"project_name" TEXT NOT NULL UNIQUE,
+	"project_db" TEXT NOT NULL,
+	CONSTRAINT "dap_project_pk" PRIMARY KEY ("uid")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "dap_workpack" (
+	"uid" serial NOT NULL,
+	"workpack_name" TEXT NOT NULL,
+	"project_id" integer NOT NULL,
+	"workpack_extent" TEXT NOT NULL,
+	CONSTRAINT "dap_workpack_pk" PRIMARY KEY ("uid")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "dap_user" (
+	"uid" serial NOT NULL,
+	"user_name" TEXT NOT NULL,
+	"user_email" TEXT NOT NULL,
+	CONSTRAINT "dap_user_pk" PRIMARY KEY ("uid")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "dap_role" (
+	"uid" serial NOT NULL,
+	"role_name" TEXT NOT NULL UNIQUE,
+	"role_level" integer NOT NULL,
+	CONSTRAINT "dap_role_pk" PRIMARY KEY ("uid")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+CREATE TABLE "workpack_user_role" (
+	"uid" serial NOT NULL,
+	"workpack_id" integer NOT NULL,
+	"user_id" integer NOT NULL,
+	"role_id" integer NOT NULL,
+	CONSTRAINT "workpack_user_role_pk" PRIMARY KEY ("uid")
+) WITH (
+  OIDS=FALSE
+);
+
+
+
+
+ALTER TABLE "dap_workpack" ADD CONSTRAINT "dap_workpack_fk0" FOREIGN KEY ("project_id") REFERENCES "dap_project"("uid");
+
+
+
+ALTER TABLE "workpack_user_role" ADD CONSTRAINT "workpack_user_role_fk0" FOREIGN KEY ("workpack_id") REFERENCES "dap_workpack"("uid");
+ALTER TABLE "workpack_user_role" ADD CONSTRAINT "workpack_user_role_fk1" FOREIGN KEY ("user_id") REFERENCES "dap_user"("uid");
+ALTER TABLE "workpack_user_role" ADD CONSTRAINT "workpack_user_role_fk2" FOREIGN KEY ("role_id") REFERENCES "dap_role"("uid");
+
+
+
+
+

@@ -1,24 +1,21 @@
-import sqlite3
-
 import folium
 from flask import Flask, render_template, request, redirect, url_for, g, flash, abort
+from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import (
     DataRequired
 )
 
-
-
 from model import (get_db, get_user_list, get_users, get_workpack_list, get_workpacks, get_specific_workpack,
                     get_specific_workpack_details, get_projects,
                     get_project_list, get_workpack_details, get_role_list)
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:password@localhost/flasksql'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Password123@localhost/dapadmin'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SECRET_KEY"] = "secretkey"
-
+db = SQLAlchemy(app)
 
 class NewProjectForm(FlaskForm):
     name = StringField("ProjectName")
