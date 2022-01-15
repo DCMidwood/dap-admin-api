@@ -30,13 +30,13 @@
 <br />
 <div align="center">
   <a href="https://github.com/DCMidwood/dap-admin-api">
-    <img src="images/logo.png" alt="Logo" width="80" height="80">
+    <img src="static/images/dap_logo.jpg" alt="Logo" width="80" height="80">
   </a>
 
 <h3 align="center">dap admin api</h3>
 
   <p align="center">
-    Flask api application for managing an admin db
+    Flask api application for managing an admin db. Utilising Flask, Flask-SQLAlchemy, Psycopg2 and Postgres SQL
     <br />
     <a href="https://github.com/DCMidwood/dap-admin-api"><strong>Explore the docs »</strong></a>
     <br />
