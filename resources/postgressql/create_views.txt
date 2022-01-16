@@ -1,0 +1,20 @@
+drop view vdap_workpack_detail 
+create view vdap_workpack_detail as
+select dw.uid as wpk_id, workpack_name, workpack_extent,
+dp.uid as prj_id, project_name, project_db,
+du.uid as user_id, user_name, user_email,
+dr.uid as role_id, dr.role_name, role_level
+from dap_workpack dw
+inner join dap_project dp ON dw.project_id = dp.uid 
+inner join workpack_user_role wur on dw.uid = wur.workpack_id 
+inner join dap_user du on du.uid = wur.user_id 
+inner join dap_role dr on dr.uid = wur.role_id 
+
+
+drop view vdap_project_workpack;
+create view vdap_project_workpack as 
+select 	row_number() OVER (order by dw.uid) As uid,
+		dw.uid as workpack_id, workpack_name, workpack_extent,
+		dp.uid as project_id, project_name, project_db
+from dap_workpack dw
+inner join dap_project dp ON dw.project_id = dp.uid 
