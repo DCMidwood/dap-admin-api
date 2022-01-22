@@ -121,20 +121,27 @@ This is an example of how to list things you need to use the software and how to
 
 ### Installation
 
-1. Get a free API Key at [https://example.com](https://example.com)
-2. Clone the repo
-   ```sh
+1. Clone the repo
+   ```bash
    git clone https://github.com/DCMidwood/dap-admin-api.git
    ```
-3. Install NPM packages
-   ```sh
-   npm install
+2. Move into the directory where we have the project files : 
+   ```bash
+   cd dap-admin-api
+   ```   
+3. Create virtual environment
+   ```bash
+   python -m venv venv
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = 'ENTER YOUR API';
+4. Activate the virtual environment :
+   ```bash
+   venv\scripts\activate
    ```
-
+5. Install the requirements :
+   ```bash
+   pip install -r requirements.txt
+   ```
+   
 <p align="right">(<a href="#top">back to top</a>)</p>
 
 
