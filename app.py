@@ -1,4 +1,3 @@
-import folium
 from flask import Flask, render_template, request, redirect, url_for, g, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
@@ -328,11 +327,6 @@ def user_overview():
 @app.route('/user/<index>')
 def user(index):
     return render_template('user.html')
-
-
-@app.route('/map/folium')
-def map_folium():
-    return render_template("map_folium.html")
 
 
 @app.route('/map/esrimap')
