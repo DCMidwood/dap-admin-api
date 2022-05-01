@@ -1,7 +1,7 @@
 INSERT INTO dap_project
 (project_name, project_db)
 values
-	('ProjectA', 'dbA');
+	('ProjectA', 'dbA'),
     ('ProjectB', 'dbB'),
    	('ProjectC', 'dbC');
 

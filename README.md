@@ -1,4 +1,23 @@
 <div id="top"></div>
+<<<<<<< HEAD
+<!--
+*** Thanks for checking out the Best-README-Template. If you have a suggestion
+*** that would make this better, please fork the repo and create a pull request
+*** or simply open an issue with the tag "enhancement".
+*** Don't forget to give the project a star!
+*** Thanks again! Now go create something AMAZING! :D
+-->
+
+<!-- PROJECT SHIELDS -->
+<!--
+*** I'm using markdown "reference style" links for readability.
+*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
+*** See the bottom of this document for the declaration of the reference variables
+*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
+*** https://www.markdownguide.org/basic-syntax/#reference-style-links
+-->
+=======
+>>>>>>> main
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -88,6 +107,11 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
+<<<<<<< HEAD
+Requires a postgres sql database called dapadmin
+check it complies with SQLALCHEMY_DATABASE_URI in the app.py module
+requires the tables, values and views, which can be made using the text in the resources -> postgressql text files
+=======
 > create a virtual environment
 > make sure pipenv is installed
 > use pipenv to install the Pipfile
@@ -99,6 +123,7 @@ This is an example of how to list things you need to use the software and how to
   ```sh
   npm install npm@latest -g
   ```
+>>>>>>> main
 
 ### Installation
 
