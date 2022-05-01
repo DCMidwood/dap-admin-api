@@ -265,7 +265,7 @@ def new_workpackuser():
 
 @app.route('/map')
 def map_func():
-	return render_template('map_drawextent.html')
+    return render_template('map_drawextent.html')
 
 @app.route("/workpack/<int:index>")
 def workpack_view(index):

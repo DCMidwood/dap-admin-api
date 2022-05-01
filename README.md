@@ -1,4 +1,5 @@
 <div id="top"></div>
+<<<<<<< HEAD
 <!--
 *** Thanks for checking out the Best-README-Template. If you have a suggestion
 *** that would make this better, please fork the repo and create a pull request
@@ -15,6 +16,8 @@
 *** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
 *** https://www.markdownguide.org/basic-syntax/#reference-style-links
 -->
+=======
+>>>>>>> main
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -104,9 +107,23 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
+<<<<<<< HEAD
 Requires a postgres sql database called dapadmin
 check it complies with SQLALCHEMY_DATABASE_URI in the app.py module
 requires the tables, values and views, which can be made using the text in the resources -> postgressql text files
+=======
+> create a virtual environment
+> make sure pipenv is installed
+> use pipenv to install the Pipfile
+> pipenv shell
+
+This is an example of how to list things you need to use the software and how to install them.
+
+- npm
+  ```sh
+  npm install npm@latest -g
+  ```
+>>>>>>> main
 
 ### Installation
 
@@ -122,9 +139,9 @@ requires the tables, values and views, which can be made using the text in the r
    ```bash
    python -m venv venv
    ```
-4. Activate the virtual environment :
-   ```bash
-   venv\scripts\activate
+4. Enter your API in `config.js`
+   ```js
+   const API_KEY = "ENTER YOUR API";
    ```
 5. Install the requirements :
    ```bash
