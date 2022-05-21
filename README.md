@@ -1,6 +1,4 @@
 <div id="top"></div>
-=======
-
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
 [![Stargazers][stars-shield]][stars-url]
@@ -69,14 +67,8 @@ dap admin api. Flask Application built to manage an admin db for our design auto
 
 ### Built With
 
-- [Next.js](https://nextjs.org/)
-- [React.js](https://reactjs.org/)
-- [Vue.js](https://vuejs.org/)
-- [Angular](https://angular.io/)
-- [Svelte](https://svelte.dev/)
-- [Laravel](https://laravel.com)
-- [Bootstrap](https://getbootstrap.com)
-- [JQuery](https://jquery.com)
+- [Python 3.10](https://docs.python.org/3/whatsnew/3.10.html)
+- [flask]([https://reactjs.org/](https://flask.palletsprojects.com/en/2.1.x/))
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -84,15 +76,14 @@ dap admin api. Flask Application built to manage an admin db for our design auto
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Following section indicates how to dpeloy and use the application.
 
 ### Prerequisites
 
-<<<<<<< HEAD
 Requires a postgres sql database called dapadmin
-check it complies with SQLALCHEMY_DATABASE_URI in the app.py module
-requires the tables, values and views, which can be made using the text in the resources -> postgressql text files
+Check it complies with SQLALCHEMY_DATABASE_URI in the app.py module
+Requires tables, values and views, which can be created by running the prompts resources -> postgressql text files
+
 =======
 > create a virtual environment
 > make sure pipenv is installed
