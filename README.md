@@ -70,7 +70,7 @@ dap admin api. Flask Application built to manage an admin db for our design auto
 ### Built With
 
 - [Python 3.10](https://docs.python.org/3/whatsnew/3.10.html)
-- [flask]([https://reactjs.org/](https://flask.palletsprojects.com/en/2.1.x/))
+- [flask]([https://reactjs.org/](https://flask.palletsprojects.com/en/2.1.x/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
