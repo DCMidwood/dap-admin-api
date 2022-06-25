@@ -5,8 +5,8 @@
 {% block content %}
     <h1>Workpack Details </h1>
     Id: {{index}}<br>
-    Name: {{workpack.workpack}}<br>
-    Project: {{workpack.project}}<br>
+    Name: {{workpack.workpack_name}}<br>
+    Project: {{workpack.project_name}}<br>
 
 
 
@@ -16,8 +16,8 @@
 </div>
 
 <div class="map_extent">
-    <h2>Workpack Extent</h2><hr>
-      {% include 'map.html' %}
+    <h2>Workpack Extent {{coords}}</h2><hr>
+      {% include 'map_workpackextent.html' %}
 </div>
 
 {% endblock %}

@@ -7,16 +7,16 @@
     <form method="POST" action="{{ url_for('new_workpackuser') }}">
       {{ form.hidden_tag() }}
       <div class="form-group">
-        {{ form.workpackid.label }} 
-        {{ form.workpackid(class="form-control") }}
+        {{ form.workpack_id.label }} 
+        {{ form.workpack_id(class="form-control") }}
       </div>
       <div class="form-group">
-        {{ form.userid.label }} 
-        {{ form.userid(class="form-control") }}
+        {{ form.user_id.label }} 
+        {{ form.user_id(class="form-control") }}
       </div>
       <div class="form-group">
-        {{ form.roleid.label }} 
-        {{ form.roleid(class="form-control") }}
+        {{ form.role_id.label }} 
+        {{ form.role_id(class="form-control") }}
       </div>
       <hr />
       {{ form.submit(class="btn btn-primary form-control") }}

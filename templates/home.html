@@ -3,19 +3,39 @@
 
 {% block content %}
   <div class="row">
+    <h2>Workpack Overview</h2>
     <div class="col-lg-9">
       <ul>
         {% if workpacks %}
         {% for workpack in workpacks %}
         <li>
-          <a href="{{ url_for('workpack_view', index=workpack.id) }}">
-            {{ workpack.project }} - {{ workpack.workpack }}
+          <a href="{{ url_for('workpack_view', index=workpack.workpack_id) }}">
+            {{ workpack.project_name }} - {{ workpack.workpack_name }}
           </a>
         </li>
         {% endfor %}
       </ul>
         {% else %}
-        <h1 class="offset-lg-3">No items to show.</h1>
+        <h1 class="offset-lg-3">No workpacks to show.</h1>
+        {% endif %}
+      <ul>
+    </div>
+  </div>
+  <div class="row">
+    <h2>Project Overview</h2>
+    <div class="col-lg-9">
+      <ul>
+        {% if projects %}
+        {% for project in projects %}
+        <li>
+          <a href="#" ></a>
+            {{ project.project_name }} 
+          </a>
+        </li>
+        {% endfor %}
+      </ul>
+        {% else %}
+        <h1 class="offset-lg-3">No projects to show.</h1>
         {% endif %}
       <ul>
     </div>

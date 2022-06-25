@@ -1,14 +1,11 @@
-from flask import Flask, render_template, request, g, flash, abort
+from flask import Flask, render_template, request, redirect, url_for, g, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
+from sqlalchemy import ForeignKey
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
 from wtforms.validators import (
     DataRequired
 )
-
-from model import (get_db, get_user_list, get_users, get_workpack_list, get_workpacks, get_specific_workpack,
-                    get_specific_workpack_details, get_projects,
-                    get_project_list, get_workpack_details, get_role_list)
 
 app = Flask(__name__)
 app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql://postgres:Password123@localhost/dapadmin'
@@ -16,59 +13,277 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config["SECRET_KEY"] = "secretkey"
 db = SQLAlchemy(app)
 
-class NewProjectForm(FlaskForm):
-    name = StringField("ProjectName")
-    database = StringField("database")
-    submit = SubmitField("Submit")
+class dap_user(db.Model):
+    __tablename__= 'dap_user'
+    uid = db.Column(db.Integer, primary_key =True)
+    user_name = db.Column(db.String(50), unique = True)
+    user_email = db.Column(db.String(50), unique = True)
+
+    def __init__(self, user_name, user_email):
+        self.user_name = user_name
+        self.user_email = user_email
+
+
+class dap_project(db.Model):
+    __tablename__ = 'dap_project'
+    uid = db.Column(db.Integer, primary_key =True)
+    project_name = db.Column(db.String(50), unique = True)
+    project_db = db.Column(db.String(50), unique = True)
+
+    def __init__(self, project_name, project_db):
+        self.project_name = project_name
+        self.project_db = project_db
+
+
+class dap_role(db.Model):
+    __tablename__ = 'dap_role'
+    uid = db.Column(db.Integer, primary_key =True)
+    role_name = db.Column(db.String(50), unique = True)
+    role_level = db.Column(db.Integer, unique = False)
+
+    def __init__(self,role_name, role_level):
+        self.role_name = role_name
+        self.role_level= role_level
+
+
+class dap_workpack(db.Model):
+    __tablename__ = 'dap_workpack'
+    uid = db.Column(db.Integer, primary_key =True)
+    workpack_name = db.Column(db.String(50), unique = True)
+    project_id = db.Column(db.Integer, unique = False)
+    workpack_extent = db.Column(db.String(100))
+
+    def __init__(self, workpack_name, project_id, workpack_extent):
+        self.workpack_name = workpack_name
+        self.project_id = project_id
+        self.workpack_extent = workpack_extent
+
+
+class dap_workpack_user_role(db.Model):
+    __tablename__ = 'workpack_user_role'
+    uid = db.Column(db.Integer, primary_key =True)
+    workpack_id = db.Column(db.Integer, unique = False)
+    user_id = db.Column(db.Integer, unique = False)
+    role_id = db.Column(db.Integer, unique = False)
+
+    def __init__(self, workpack_id, user_id, role_id):
+        self.workpack_id = workpack_id
+        self.user_id = user_id
+        self.role_id = role_id
+
+
+class vdap_workpack_project(db.Model):
+    __tablename__ = 'vdap_project_workpack'
+    uid = db.Column(db.Integer, primary_key =True)
+    workpack_id = db.Column(db.Integer, unique = False)
+    workpack_name = db.Column(db.String(50), unique = True)
+    workpack_extent = db.Column(db.String(100))    
+    project_id = db.Column(db.Integer, unique = False)
+    project_name = db.Column(db.String(100))   
+    project_db = db.Column(db.String(100))
+
+    def __init__(self, workpack_id, workpack_name, workpack_extent,
+                        project_id, project_name, project_db):
+        self.workpack_id = workpack_id
+        self.workpack_name = workpack_name
+        self.workpack_extent = workpack_extent   
+        self.project_id = project_id
+        self.project_name = project_name 
+        self.project_db = project_db
+
+
+class vdap_workpack_detais(db.Model):
+    __tablename__ = 'vdap_workpack_detail'
+    uid = db.Column(db.Integer, primary_key =True)
+    workpack_id = db.Column(db.Integer, unique = False)
+    workpack_name = db.Column(db.String(50), unique = True)
+    workpack_extent = db.Column(db.String(50), unique = True)
+
+    project_id = db.Column(db.Integer, unique = False)
+    project_name = db.Column(db.String(50), unique = True)
+    project_db = db.Column(db.String(50), unique = True)
+
+    user_id = db.Column(db.Integer, unique = False)
+    user_name = db.Column(db.String(50), unique = True)
+    user_email = db.Column(db.String(50), unique = True)
+
+    role_id = db.Column(db.Integer, unique = False)
+    role_name = db.Column(db.String(50), unique = True)
+    role_level = db.Column(db.String(50), unique = True)
+
+    def __init__(self, workpack_id, workpack_name, workpack_extent,
+                        project_id, project_name, project_db,
+                        user_id, user_name, user_email,
+                        role_id, role_name, role_level):
+        self.workpack_id = workpack_id
+        self.workpack_name = workpack_name
+        self.workpack_extent = workpack_extent                     
+
+        self.project_id = project_id
+        self.project_name = project_name
+        self.project_db = project_db        
+
+        self.user_id = user_id
+        self.user_name = user_name
+        self.user_email = user_email               
+
+        self.role_id = role_id
+        self.role_name = role_name
+        self.role_level = role_level             
 
 
 class NewWorkpackForm(FlaskForm):
-
     workpack_name = StringField("workpackname")
     project_id = SelectField('projectid', choices=[])
-    workpack_extent = StringField("workpack_extent")
-    submit = SubmitField("Submit")
-
-
-class NewUserForm(FlaskForm):
-    user_name = StringField("User Name")
-    user_email = StringField("Email")
+    workpack_extent = StringField("Workpack_extent")
     submit = SubmitField("Submit")
 
 
 class NewWorkpackUserForm(FlaskForm):
-    workpackid = SelectField("Workpack", choices=[])
-    userid = SelectField("User", choices=[])
-    roleid = SelectField("Role", choices=[])
+    workpack_id = SelectField("Workpack", choices=[])
+    user_id = SelectField("User", choices=[])
+    role_id = SelectField("Role", choices=[])
     submit = SubmitField("Submit")
 
 
 @app.route("/")
 def home():
-    workpacks = get_workpacks()
-
+    workpacks = vdap_workpack_project.query.all()
+    projects = dap_project.query.all()
     return render_template("home.html",
-                           workpacks=workpacks)
+                           workpacks=workpacks,
+                           projects=projects
+                           )
 
+
+@app.route("/user/new", methods=["GET", "POST"])
+def new_user():
+
+    if request.method == 'POST':
+        user_name = request.form['user_name']
+        user_email = request.form['user_email']
+
+        user = dap_user(user_name, user_email)
+        db.session.add(user)
+        db.session.commit()
+
+        # redirect to some page
+        flash("Item {} has been successfully submitted".format(request.form.get("user_name")), "success")
+        return redirect(url_for('user_overview'))
+
+    return render_template("new_user.html")#, form=new_user_form)
+
+
+@app.route("/project/new", methods=["GET", "POST"])
+def new_project():
+    if request.method == 'POST':
+        project_name = request.form['project_name']
+        project_db = request.form['project_db']
+
+        project = dap_project(project_name, project_db)
+        db.session.add(project)
+        db.session.commit()
+        # redirect to some page
+        flash("Item {} has been successfully submitted".format(request.form.get("project_name")), "success")
+        return redirect(url_for('home'))
+
+    return render_template("new_project.html")
+
+
+@app.route("/workpack/new", methods=["GET", "POST"])
+def new_workpack():
+    form = NewWorkpackForm()
+
+    projects = dap_project.query.all()
+    project_list = []
+    for row in projects:
+        id=row.uid
+        name=row.project_name
+        project_list.append((id, name))
+    form.project_id.choices = project_list
+
+    if request.method == 'POST':
+        workpack_name = request.form['workpack_name']
+        project_id = request.form['project_id']
+        workpack_extent = request.form['workpack_extent']
+
+        workpack = dap_workpack(workpack_name, project_id, workpack_extent)
+        db.session.add(workpack)
+        db.session.commit()
+
+        # redirect to some page
+        flash("Item {} has been successfully submitted".format(request.form.get("workpack_name")), "success")
+        return redirect(url_for('home'))
+
+    return render_template("new_workpack.html", form=form)
+
+
+@app.route("/workpack_user/new", methods=["GET", "POST"])
+def new_workpackuser():
+    form = NewWorkpackUserForm()
+
+    workpack_list = []
+    workpacks = users = dap_workpack.query.all()
+    for row in workpacks:
+        id=row.uid
+        name=row.workpack_name
+        workpack_list.append((id, name))
+    form.workpack_id.choices = workpack_list
+
+    users = dap_user.query.all()
+    user_list = []
+    for row in users:
+        id=row.uid
+        name=row.user_name
+        user_list.append((id, name))
+    form.user_id.choices = user_list
+
+    roles = dap_role.query.all()
+    role_list = []
+    for row in roles:
+        id=row.uid
+        name=row.role_name
+        role_list.append((id, name))
+
+    form.role_id.choices = role_list
+
+    if request.method == "POST":
+        workpack_id = request.form['workpack_id']
+        user_id = request.form['user_id']
+        role_id = request.form['role_id']
+
+        workpack_user_role = dap_workpack_user_role(workpack_id, user_id, role_id)
+        db.session.add(workpack_user_role)
+        db.session.commit()
+
+        # redirect to some page
+        flash("Item has been successfully submitted", "success")
+        return redirect(url_for('home'))
+
+    return render_template("new_workpackuser.html", form = form)
+
+
+@app.route('/map')
+def map_func():
+    return render_template('map_drawextent.html')
 
 @app.route("/workpack/<int:index>")
 def workpack_view(index):
     try:
-        workpack = get_specific_workpack(index)
-        workpack_details = get_specific_workpack_details(index)
+        workpack = vdap_workpack_project.query.filter_by(workpack_id = index).first()
+        workpack_details = vdap_workpack_detais.query.filter_by(workpack_id = index).all()
 
         wkp_headings = ("User Name", "User Email", "Role")
         wkp_data = []
         for row in workpack_details:
-            wkp_data.append((row.get('user'),
-                            row.get('user_email'),
-                            row.get('role'))
+            wkp_data.append(
+                            (row.user_name,
+                            row.user_email,
+                            row.role_name)
                             )
 
-        #wkp_data = ( #workpack_details.user_email, workpack_details.role)
-
         # create the map
-        coords = workpack.get("extent")
+        coords = workpack.workpack_extent
         lat = float(coords.split(",")[0])
         lon = float(coords.split(",")[1])
         coords_formatted = (lat,lon
@@ -90,133 +305,33 @@ def workpack_view(index):
         abort(404)
 
 
-@app.route("/user/new", methods=["GET", "POST"])
-def new_user():
-    new_user_form = NewUserForm()
-    if request.method == "POST":
-        conn = get_db()
-        c = conn.cursor()
-
-        c.execute("""INSERT INTO dap_user
-                        (user_name,user_email)
-                        VALUES(?,?)""",
-                  (
-                      new_user_form.user_name.data,
-                      new_user_form.user_email.data
-                  )
-                  )
-        conn.commit()
-        # redirect to some page
-        flash("Item {} has been successfully submitted".format(request.form.get("user_name")), "success")
-
-    return render_template("new_user.html", form=new_user_form)
-
-
-@app.route("/project/new", methods=["GET", "POST"])
-def new_project():
-    new_project_form = NewProjectForm()
-    if request.method == "POST":
-
-        conn = get_db()
-        c = conn.cursor()
-
-        c.execute("""INSERT INTO dap_project
-                        (project_name,project_db)
-                        VALUES(?,?)""",
-                  (
-                      new_project_form.name.data,
-                      new_project_form.database.data
-                  )
-                  )
-        conn.commit()
-        # redirect to some page
-        flash("Item {} has been successfully submitted".format(request.form.get("name")), "success")
-
-    return render_template("new_project.html", form=new_project_form)
-
-
-@app.route("/workpack/new", methods=["GET", "POST"])
-def new_workpack():
-    form = NewWorkpackForm()
-    project_list = get_project_list()
-    form.project_id.choices = project_list
-    if request.method == "POST":
-        #print("Form Data:")
-        #print("Workpack Name: {}, Project Id: {}".format(
-        #    request.form.get("name"),
-        #    request.form.get("project_id")
-        #))
-        conn = get_db()
-        c = conn.cursor()
-
-        c.execute("""INSERT INTO dap_workpack
-                        (workpack_name, project_id, workpack_extent)
-                        VALUES(?,?,?)""",
-                  (
-                      form.workpack_name.data,
-                      form.project_id.data,
-                      form.workpack_extent.data,
-                  )
-                  )
-        conn.commit()
-
-
-        # redirect to some page
-        flash("Item {} has been successfully submitted".format(request.form.get("workpack_name")), "success")
-
-    return render_template("new_workpack.html", form=form)
-
-
-@app.route("/workpack/new_user", methods=["GET", "POST"])
-def new_workpackuser():
-    form = NewWorkpackUserForm()
-
-    workpack_list = get_workpack_list()
-    form.workpackid.choices = workpack_list
-
-    user_list = get_user_list()
-    form.userid.choices = user_list
-
-    role_list = get_role_list()
-    form.roleid.choices = role_list
-
-    if request.method == "POST":
-        conn = get_db()
-        c = conn.cursor()
-        c.execute("""INSERT INTO workpack_user_role
-                        (workpack_id, user_id, role_id)
-                        VALUES(?,?,?)""",
-                  (
-                      form.workpackid.data,
-                      form.userid.data,
-                      form.roleid.data,
-                  )
-                  )
-        conn.commit()
-
-        # redirect to some page
-        flash("Item has been successfully submitted", "success")
-
-    return render_template("new_workpackuser.html", form=form)
-
-
 @app.route('/user/overview')
 def user_overview():
-    user_list = get_users()
-    user_headings = ("User Name", "User Email")
+
+    users = dap_user.query.all()
+    print (users)
+
+    user_headings = ("User_Name", "User_Email")
     user_data = []
-    for row in user_list:
-        user_data.append((row.get('name'),
-                        row.get('email')
-                        ))
+    
+    for row in users:
+        user_data.append((row.user_name,
+                        row.user_email))
+                        
     return render_template('user_overview.html',
                             headings=user_headings,
-                            data=user_data,)
+                            data=user_data,
+                            users= users)
 
 
 @app.route('/user/<index>')
 def user(index):
     return render_template('user.html')
+
+
+@app.route('/map/esrimap')
+def map_esrimap():
+    return render_template("esri_map.html")
 
 
 @app.teardown_appcontext

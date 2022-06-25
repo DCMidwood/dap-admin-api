@@ -1,7 +1,18 @@
 {% extends 'base.html' %} {% set active_page = 'new_item' %} {% block title
 %}User Overview {% endblock %} {% block content %}
+
+<div class="User List">
+  <h2>User List</h2>
+
+  {%for user in users %}
+
+  <b>Username:</b> {{user.user_name}}<br />
+
+  {% endfor %}
+</div>
+
 <div class="Users">
-  <h2>User Overview</h2>
+  <h2>Users Table</h2>
   <hr />
   {% include 'static_table.html' %}
 </div>
