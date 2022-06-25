@@ -1,31 +1,61 @@
-{% extends 'base.html' %}
-{% set active_page = 'new_item' %}
-{% block title %}Add new workpack - {% endblock %}
+{% extends 'base.html' %} {% set active_page = 'new_item' %} {% block title
+%}Add new workpack - {%endblock %} {% block content %}
+<head>
+  <script src="https://js.arcgis.com/4.23/"></script>
+  <link
+    rel="stylesheet"
+    href="https://js.arcgis.com/4.23/esri/themes/light/main.css"
+  />
+  <script>
+    require(["esri/config", "esri/Map", "esri/views/MapView"], function (
+      esriConfig,
+      Map,
+      MapView
+    ) {
+      const map = new Map({
+        basemap: "gray-vector",
+      });
 
+      view = new MapView({
+        container: "viewDiv",
+        map: map,
+        extent: {
+          xmin: -2.65,
+          ymin: 54.2,
+          xmax: -2.7,
+          ymax: 54.25,
+          spatialReference: 4326,
+        },
+      });
+    });
+  </script>
+</head>
 
-{% block content %}
 <div class="row">
-    <div class="col-lg-7 offset-lg-2 my-5">
-        <h1>Add new workpack</h1><hr>
-        <form method="POST" action="{{ url_for('new_workpack') }}">
-            {{ form.hidden_tag() }}
-            <div class="form-group">
-                {{ form.workpack_name.label }}
-                {{ form.workpack_name(class="form-control") }}
-            </div>
+  <div class="col-lg-7 offset-lg-2 my-5">
+    <h1>Add new workpack</h1>
+    <hr />
+    <form method="POST" action="{{ url_for('new_workpack') }}">
+      {{ form.hidden_tag() }}
+      <div class="form-group">
+        {{ form.workpack_name.label }} {{
+        form.workpack_name(class="form-control") }}
+      </div>
 
-            <div class="form-group">
-                {{ form.project_id.label }}
-                {{ form.project_id(class="form-control") }}
-            </div>
-            <div class="form-group">
-                {{ form.workpack_extent.label }}
-                {{ form.workpack_extent(class="form-control") }}
-            </div>
-            <hr>
-            {{ form.submit(class="btn btn-primary form-control") }}
-        </form>
-    </div>
+      <div class="form-group">
+        {{ form.project_id.label }} {{ form.project_id(class="form-control") }}
+      </div>
+      <div class="form-group">
+        {{ form.workpack_extent.label }} {{
+        form.workpack_extent(class="form-control") }}
+      </div>
+      <hr />
+      {{ form.submit(class="btn btn-primary form-control") }}
+    </form>
+  </div>
+  <h1>Map</h1>
+  <div id="viewDiv"></div>
+  <h2>end</h2>
 </div>
 
 {% endblock %}
