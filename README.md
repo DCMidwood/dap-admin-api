@@ -114,13 +114,13 @@ This is an example of how to list things you need to use the software and how to
    ```bash
    python -m venv venv
    ```
-4. Enter your API in `config.js`
-   ```js
-   const API_KEY = "ENTER YOUR API";
-   ```
-5. Install the requirements :
+4. Install the requirements :
    ```bash
    pip install -r requirements.txt
+   ```
+5. Run the app.py in a python terminal:
+   ```bash
+   python app.py
    ```
 
 <p align="right">(<a href="#top">back to top</a>)</p>

@@ -1,5 +1,4 @@
-import folium
-from flask import Flask, render_template, request, redirect, url_for, g, flash, abort
+from flask import Flask, render_template, request, g, flash, abort
 from flask_sqlalchemy import SQLAlchemy
 from flask_wtf import FlaskForm
 from wtforms import StringField, TextAreaField, SubmitField, SelectField
@@ -201,11 +200,6 @@ def new_workpackuser():
     return render_template("new_workpackuser.html", form=form)
 
 
-@app.route('/map')
-def map_func():
-    return render_template('map_drawextent.html')
-
-
 @app.route('/user/overview')
 def user_overview():
     user_list = get_users()
@@ -223,16 +217,6 @@ def user_overview():
 @app.route('/user/<index>')
 def user(index):
     return render_template('user.html')
-
-
-@app.route('/map/folim')
-def map_folium():
-    return render_template("map_folium.html")
-
-
-@app.route('/map/esrimap')
-def map_esrimap():
-    return render_template("esri_map.html")
 
 
 @app.teardown_appcontext

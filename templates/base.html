@@ -42,17 +42,13 @@
             <a href="{{ url_for('new_workpack') }} " class="nav-link">Add New Workpack</a>
           </li>
           <li class="nav-item {{ 'active' if active_page == 'user_overview' else ''}}">
-            <a href="{{ url_for('user_overview') }} " class="nav-link">User Overviews</a>
+            <a href="{{ url_for('user_overview') }} " class="nav-link">User Overview</a>
           </li>
           <li class="nav-item {{ 'active' if active_page == 'new_user' else ''}}">
             <a href="{{ url_for('new_user') }} " class="nav-link">Add New User</a>
           </li>
           <li class="nav-item {{ 'active' if active_page == 'new_workpackuser' else ''}}">
             <a href="{{ url_for('new_workpackuser') }} " class="nav-link">Assign User to Workpack</a>
-          </li>
-
-          <li class="nav-item {{ 'active' if active_page == 'map_func' else ''}}">
-            <a href="{{ url_for('map_func') }} " class="nav-link">Map</a>
           </li>
           
         </ul>
