@@ -1,23 +1,5 @@
 <div id="top"></div>
-<<<<<<< HEAD
-<!--
-*** Thanks for checking out the Best-README-Template. If you have a suggestion
-*** that would make this better, please fork the repo and create a pull request
-*** or simply open an issue with the tag "enhancement".
-*** Don't forget to give the project a star!
-*** Thanks again! Now go create something AMAZING! :D
--->
-
-<!-- PROJECT SHIELDS -->
-<!--
-*** I'm using markdown "reference style" links for readability.
-*** Reference links are enclosed in brackets [ ] instead of parentheses ( ).
-*** See the bottom of this document for the declaration of the reference variables
-*** for contributors-url, forks-url, etc. This is an optional, concise syntax you may use.
-*** https://www.markdownguide.org/basic-syntax/#reference-style-links
--->
 =======
->>>>>>> main
 
 [![Contributors][contributors-shield]][contributors-url]
 [![Forks][forks-shield]][forks-url]
@@ -87,14 +69,8 @@ dap admin api. Flask Application built to manage an admin db for our design auto
 
 ### Built With
 
-- [Next.js](https://nextjs.org/)
-- [React.js](https://reactjs.org/)
-- [Vue.js](https://vuejs.org/)
-- [Angular](https://angular.io/)
-- [Svelte](https://svelte.dev/)
-- [Laravel](https://laravel.com)
-- [Bootstrap](https://getbootstrap.com)
-- [JQuery](https://jquery.com)
+- [Python 3.10](https://docs.python.org/3/whatsnew/3.10.html)
+- [flask](https://flask.palletsprojects.com/en/2.1.x/)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -102,15 +78,14 @@ dap admin api. Flask Application built to manage an admin db for our design auto
 
 ## Getting Started
 
-This is an example of how you may give instructions on setting up your project locally.
-To get a local copy up and running follow these simple example steps.
+Following section indicates how to dpeloy and use the application.
 
 ### Prerequisites
 
-<<<<<<< HEAD
 Requires a postgres sql database called dapadmin
-check it complies with SQLALCHEMY_DATABASE_URI in the app.py module
-requires the tables, values and views, which can be made using the text in the resources -> postgressql text files
+Check it complies with SQLALCHEMY_DATABASE_URI in the app.py module
+Requires tables, values and views, which can be created by running the prompts resources -> postgressql text files
+
 =======
 > create a virtual environment
 > make sure pipenv is installed
@@ -163,7 +138,7 @@ _For more examples, please refer to the [Documentation](https://example.com)_
 <!-- ROADMAP -->
 
 ## Roadmap
-
+To view trello board [board](https://trello.com/b/u0DfnIM1/dap-admin-kanban)
 - [] Feature 1
 - [] Feature 2
 - [] Feature 3
