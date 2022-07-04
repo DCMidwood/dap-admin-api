@@ -1,23 +1,20 @@
-{% extends 'base.html' %}
-{% set active_page = 'new_item' %}
-{% block title %}Workpack  {{workpack.workpack}}{% endblock %}
-
-{% block content %}
-    <h1>Workpack Details </h1>
-    Id: {{index}}<br>
-    Name: {{workpack.workpack_name}}<br>
-    Project: {{workpack.project_name}}<br>
-
-
+{% extends 'base.html' %} {% set active_page = 'new_item' %} {% block title
+%}Workpack {{workpack.workpack}}{% endblock %} {% block content %}
+<h1>Workpack Details</h1>
+Id: {{index}}<br />
+Name: {{workpack.workpack_name}}<br />
+Project: {{workpack.project_name}}<br />
 
 <div class="users">
-    <h2>Users</h2><hr>
-      {% include 'static_table.html' %}
+  <h2>Users</h2>
+  <hr />
+  {% include 'static_table.html' %}
 </div>
 
 <div class="map_extent">
-    <h2>Workpack Extent {{coords}}</h2><hr>
-      {% include 'map_workpackextent.html' %}
+  <h2>Workpack Extent (Lon: {{coords.lon}}, Lat: {{coords.lat}})</h2>
+  <hr />
+  {% include 'map_workpackextent.html' %}
 </div>
 
 {% endblock %}
