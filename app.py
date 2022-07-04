@@ -284,12 +284,11 @@ def workpack_view(index):
 
         # create the map
         coords = workpack.workpack_extent
-        lat = float(coords.split(",")[0])
-        lon = float(coords.split(",")[1])
-        coords_formatted = (lat,lon
-                            )
-        coord_dict = {"lat": lat,
-                      "lon": lon
+        lon = float(coords.split(",")[0])
+        lat = float(coords.split(",")[1])
+        coord_dict = {
+            "lat": lat,
+            "lon": lon
                       }
         print (coord_dict)
 
