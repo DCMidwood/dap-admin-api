@@ -1,41 +1,62 @@
-
 {% block content %}
-<link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.css" />
-<script src="http://cdn.leafletjs.com/leaflet/v0.7.7/leaflet.js"></script>
+<script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
+<link
+  rel="stylesheet"
+  href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css"
+  type="text/css"
+/>
 
-<div id="map" style="height: 250px;"></div>
+<style>
+  .map {
+    height: 600px;
+    width: 100%;
+  }
+</style>
 
+<div id="map" style="height: 250px"></div>
 <script type="text/javascript">
-  // The first parameter are the coordinates of the center of the map
-  // The second parameter is the zoom level
-  var map = L.map('map').setView([{{coords.lat}}, {{coords.lon}}], 10);
 
-  // {s}, {z}, {x} and {y} are placeholders for map tiles
-  // {x} and {y} are the x/y of where you are on the map
-  // {z} is the zoom level
-  // {s} is the subdomain of cartodb
-  var layer = L.tileLayer('http://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}.png', {
-    attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, &copy; <a href="http://cartodb.com/attributions">CartoDB</a>'
+  var map = new ol.Map({
+      target: 'map',
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM()
+        })
+      ],
+      view: new ol.View({
+        // zoom to coordinates for the workspace
+        center: ol.proj.fromLonLat([{{coords.lon}}, {{coords.lat}}]),
+        zoom: 12
+      })
   });
 
-  // Now add the layer onto the map
-  map.addLayer(layer);
+  const geomLonLat =[{{coords.lon}}, {{coords.lat}}]
+  const geomWebMercator =  ol.proj.fromLonLat(geomLonLat);
 
-  // It even opens up a popup when you click it!
-    L.marker([{{coords.lat}}, {{coords.lon}}]).addTo(map)
-  .bindPopup("<strong>{{workpack.workpack_name}}</strong>").openPopup();
+  var workpackCentroid = new ol.Feature({
+    geometry: new ol.geom.Point(geomWebMercator)//{{coords.lon}}, {{coords.lat}}])
+  })
 
-  // TO DO - Plot the extents40.565,-3.5959
-  var bounds = [[39.3 -86.5], [39.99,-85.15]];
-  var rect = L.rectangle(bounds, {color: 'blue', weight: 1}).on('click', function (e) {
-      // There event is event object
-      // there e.type === 'click'
-      // there e.lanlng === L.LatLng on map
-      // there e.target.getLatLngs() - your rectangle coordinates
-      // but e.target !== rect
-      console.info(e);
-  }).addTo(map);
+  // define a layer
+  var workpackCentroidLayer = new ol.layer.Vector({
+    source: new ol.source.Vector({
+        features: [workpackCentroid],
+      }),
+    style: new ol.style.Style({
+        image: new ol.style.Circle({
+        radius: 12,
+        fill: new ol.style.Fill({color: 'blue'})
+        }),
+        text: new ol.style.Text({
+      font: 'bold 20px serif',
+      text: '{{workpack.workpack_name}}',
+      textBaseline: 'top',
+      offsetY: -45
+      }),
+      })
+    });
 
+  map.addLayer(workpackCentroidLayer);
 </script>
 
 {% endblock %}
