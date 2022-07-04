@@ -1,34 +1,20 @@
 {% extends 'base.html' %} {% set active_page = 'new_item' %} {% block title
 %}Add new workpack - {%endblock %} {% block content %}
 <head>
-  <script src="https://js.arcgis.com/4.23/"></script>
+  <script src="https://openlayers.org/en/v4.6.5/build/ol.js"></script>
   <link
     rel="stylesheet"
-    href="https://js.arcgis.com/4.23/esri/themes/light/main.css"
+    href="https://cdn.jsdelivr.net/gh/openlayers/openlayers.github.io@master/en/v6.14.1/css/ol.css"
+    type="text/css"
   />
-  <script>
-    require(["esri/config", "esri/Map", "esri/views/MapView"], function (
-      esriConfig,
-      Map,
-      MapView
-    ) {
-      const map = new Map({
-        basemap: "gray-vector",
-      });
+  <style>
+    .map {
+      height: 600px;
+      width: 100%;
+    }
+  </style>
 
-      view = new MapView({
-        container: "viewDiv",
-        map: map,
-        extent: {
-          xmin: -2.65,
-          ymin: 54.2,
-          xmax: -2.7,
-          ymax: 54.25,
-          spatialReference: 4326,
-        },
-      });
-    });
-  </script>
+  <script type="text/javascript"></script>
 </head>
 
 <div class="row">
@@ -53,11 +39,36 @@
       {{ form.submit(class="btn btn-primary form-control") }}
     </form>
   </div>
-  <h1>Map</h1>
-  <div id="viewDiv"></div>
-  <h2>end</h2>
 </div>
 <div class="map_extent">
-  <h2>Workpack Extent</h2>
+  <h2>Select Workpack Location</h2>
+  <div id="map" class="map"></div>
+  <script type="text/javascript">
+    var map = new ol.Map({
+      target: "map",
+      layers: [
+        new ol.layer.Tile({
+          source: new ol.source.OSM(),
+        }),
+      ],
+      view: new ol.View({
+        center: ol.proj.fromLonLat([37.41, 8.82]),
+        zoom: 4,
+      }),
+    });
+
+    const workpackExtent = document.querySelector('[name="workpack_extent"]');
+
+    map.on("click", function (event) {
+      console.log("test");
+      const coordinate = event.coordinate;
+      const coordinateLonLat = ol.proj.toLonLat(coordinate);
+      console.log(coordinateLonLat);
+      // const reorder = [coordinateLatLon[1], coordinateLatLon[0]];
+      // const reorderCoord = reorder.join(", ");
+      // console.log(reorderCoord);
+      workpackExtent.value = coordinateLonLat;
+    });
+  </script>
 </div>
 {% endblock %}

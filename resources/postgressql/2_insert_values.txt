@@ -10,10 +10,10 @@ values
 INSERT INTO dap_workpack
 (workpack_name, project_id, workpack_extent)
 VALUES
-	('WorkpackAlpha', '1', '39.77,-86.15'),
-    ('WorkpackBeta', '1', '40,-79.9'),
-    ('WorkpackCharlie', '2','40.565,-120.5959'),
-    ('WorkpackDelta', '3','40.565,-3.5959');
+	('WorkpackAlpha', '1', '-86.15, 39.77'),
+    ('WorkpackBeta', '1', '-79.9,40'),
+    ('WorkpackCharlie', '2','-120.5959, 40.565'),
+    ('WorkpackDelta', '3','-3.5959,40.565');
 
 
 INSERT INTO dap_user
