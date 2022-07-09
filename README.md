@@ -92,14 +92,6 @@ Requires tables, values and views, which can be created by running the prompts r
 > use pipenv to install the Pipfile
 > pipenv shell
 
-This is an example of how to list things you need to use the software and how to install them.
-
-- npm
-  ```sh
-  npm install npm@latest -g
-  ```
->>>>>>> main
-
 ### Installation
 
 1. Clone the repo
